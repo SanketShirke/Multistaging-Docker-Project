@@ -3,11 +3,10 @@ FROM python:3.9 AS backend-builder
 
 WORKDIR /app
 
-COPY requirements.txt ./
-
+COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY backend/ .
 
 # Stage 2: Final Image
 FROM python:3.9-slim-buster
@@ -19,4 +18,5 @@ COPY --from=backend-builder /app /app
 EXPOSE 5000
 
 CMD ["python","app.py"]
+
 
